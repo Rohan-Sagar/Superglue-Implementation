@@ -1,7 +1,8 @@
 # SuperGlue Reimplementation Project
 
 ## Overview
-This repository contains my personal attempt at re-implementing the SuperGlue architecture, as described in the paper "SuperGlue: Learning Feature Matching with Graph Neural Networks" by Paul-Edouard Sarlin, Daniel DeTone, Tomasz Malisiewicz, and Andrew Rabinovich (Link: https://openaccess.thecvf.com/content_CVPR_2020/papers/Sarlin_SuperGlue_Learning_Feature_Matching_With_Graph_Neural_Networks_CVPR_2020_paper.pdf).</br>
+This repository contains my personal attempt at re-implementing the SuperGlue architecture, as described in the paper "SuperGlue: Learning Feature Matching with Graph Neural Networks" by Paul-Edouard Sarlin, Daniel DeTone, Tomasz Malisiewicz, and Andrew Rabinovich </br>
+(Link: https://openaccess.thecvf.com/content_CVPR_2020/papers/Sarlin_SuperGlue_Learning_Feature_Matching_With_Graph_Neural_Networks_CVPR_2020_paper.pdf).</br>
 
 This project is an educational endeavor to deepen my understanding of advanced feature-matching techniques in computer vision and graph neural networks.
 
