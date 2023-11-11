@@ -24,7 +24,7 @@ This reimplementation is inspired by and based on the research presented in the 
 I extend my gratitude to the authors for their groundbreaking work in this field. This project is purely educational and not intended for commercial use.
 
 ## Installation and Usage
-1) Install all the necessary packages using:</br>
+**1) Install all the necessary packages using:**</br>
 
 **2) Run the program using:**</br>
 
