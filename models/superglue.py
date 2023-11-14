@@ -51,3 +51,12 @@ class KeypointEncoder(nn.Module):
         output = des_to_tensor + kpt_embeddings
         # print(output)
         return output
+
+class MultiplexGNN(nn.Module):
+    def __init__(self, nodes, edges):
+        super(MultiplexGNN, self).__init__()
+        self.nodes = nodes
+        self.edges = edges
+
+    def forward(self):
+        pass
