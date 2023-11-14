@@ -1,5 +1,8 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
+from torch_geometric.nn import MessagePassing
+from torch_geometric.utils import add_self_loops, degree
 from sklearn.decomposition import PCA
 import numpy as np
 
@@ -52,11 +55,73 @@ class KeypointEncoder(nn.Module):
         # print(output)
         return output
 
-class MultiplexGNN(nn.Module):
-    def __init__(self, nodes, edges):
-        super(MultiplexGNN, self).__init__()
-        self.nodes = nodes
-        self.edges = edges
 
-    def forward(self):
-        pass
+class MultiHeadAttentionLayer(nn.Module):
+    def __init__(self, in_features, out_features, num_heads):
+        super(MultiHeadAttentionLayer, self).__init__()
+        self.in_features = in_features
+        self.out_features = out_features
+        self.num_heads = num_heads
+        self.query = nn.Linear(in_features, out_features * num_heads)
+        self.key = nn.Linear(in_features, out_features * num_heads)
+        self.value = nn.Linear(in_features, out_features * num_heads)
+        self.fc_out = nn.Linear(out_features * num_heads, out_features)
+
+    def forward(self, query, key, value):
+        B, N, C = query.shape
+        queries = self.query(query).view(B, N, self.num_heads, -1)
+        keys = self.key(key).view(B, N, self.num_heads, -1)
+        values = self.value(value).view(B, N, self.num_heads, -1)
+        attention = torch.einsum("bnhc,bmhc->bnhm", [queries, keys]) / (C ** (1/2))
+        attention = F.softmax(attention, dim=-1)
+        out = torch.einsum("bnhm,bmhc->bnhc", [attention, values]).reshape(B, N, -1)
+        return self.fc_out(out)
+
+
+class GNNLayer(MessagePassing):
+    def __init__(self, in_channels, out_channels, num_heads):
+        super(GNNLayer, self).__init__(aggr='add')  # With aggregation
+        self.attention = MultiHeadAttentionLayer(in_channels, out_channels, num_heads)
+        self.lin = nn.Linear(in_channels, out_channels)
+        self.num_heads = num_heads
+
+    def forward(self, x, edge_index):
+        "Propogation from all keypoiunts"
+        print("Shape of x before reshape:", x.shape)
+        B, N, C = 1, 200, 128 
+        print("B:", B)
+        print("N:", N)
+        print("C:", C)
+        x = x.view(B, N, C)
+        print("Shape of x after reshape:", x.shape)
+        print("Shape of edge_index:", edge_index.shape)
+        print("Sample edge_index values:", edge_index[:, :10])
+        output = self.propagate(edge_index, x=x, size=(N, N))
+        print("Shape of output in forward:", output.shape)
+        return output
+
+    def message(self, x_j, edge_index, size):
+        row, col = edge_index
+        print("x_j shape:", x_j.shape, "row max:", row.max(), "col max:", col.max())
+        print("Sample row values:", row[:10], "Sample col values:", col[:10]) 
+        src_features = x_j[:, row, :]
+        dest_features = x_j[:, col, :]
+        q = self.lin(src_features)
+        k = self.lin(dest_features)
+        v = self.lin(dest_features)
+        return self.attention(q, k, v)
+
+class AttentionalGNN(nn.Module):
+    def __init__(self, num_features, num_heads=4):
+        super(AttentionalGNN, self).__init__()
+        self.conv1 = GNNLayer(num_features, 128, num_heads)
+        self.conv2 = GNNLayer(128, 128, num_heads)
+
+
+    def forward(self, x, edge_index):
+        x = F.relu(self.conv1(x, edge_index))
+        print("Shape of x after conv1:", x.shape)
+        x = self.conv2(x, edge_index)
+        print("Shape of x after conv2:", x.shape)
+        return F.log_softmax(x, dim=1)
+
