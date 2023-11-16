@@ -9,5 +9,5 @@ def main():
     if args.video:
         process_video('assets/driving/video/pexels_videos_1666547 (720p).mp4', 'output/driving/video')
     else:
-        process_images('assets/driving/images', 'output/driving/images')
+        process_images('assets/Hub_apt/images', 'output/driving/images')
 
