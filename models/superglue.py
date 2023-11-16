@@ -116,6 +116,8 @@ class AttentionalGNN(nn.Module):
 
         split_idx = desc1.shape[0]
         desc1_new, desc2_new = concat_desc[:split_idx], concat_desc[split_idx:]
+        print("desc1_new:", desc1_new)
+        print("desc2_new:", desc2_new)
         combined = torch.cat((desc1_new.unsqueeze(1), desc2_new.unsqueeze(1)), dim=1)
         "Returning a tensor for computing similiary"
         return combined 
@@ -157,6 +159,7 @@ def log_optimal_transport(scores: torch.Tensor, alpha: torch.Tensor, iters: int)
 
 def compute_similarity(gnn_output):
     gnn_output = torch.nn.functional.normalize(gnn_output, dim=2)
+    print("Normalized GNN output", gnn_output)
     descriptors1, descriptors2 = torch.split(gnn_output, gnn_output.size(1) // 2, dim=1)
     similarity_scores = torch.matmul(descriptors1.transpose(1, 2), descriptors2).squeeze(0)
     return similarity_scores
