@@ -15,6 +15,8 @@ The goal of this project is to recreate the SuperGlue architecture from the grou
 - Attentional Graph Neural Network implementation for understanding relationships between key points.
 - Keypoint encoder to combine visual appearance and location information.
 - Optimal matching layer with score prediction and the Sinkhorn algorithm.
+- SLAM for SuperGlue algorithm
+- SIFT descriptors with both brute-force matching and FLANN-based matching
 
 ## Credits and Acknowledgments
 This reimplementation is inspired by and based on the research presented in the paper:
@@ -24,17 +26,21 @@ This reimplementation is inspired by and based on the research presented in the 
 I extend my gratitude to the authors for their groundbreaking work in this field. This project is purely educational and not intended for commercial use.
 
 ## Installation and Usage
-1) Install all the necessary packages using:</br>
+1) Install all the necessary packages mentioned in requirement.txt
 
-**2) Run the program using:**</br>
+2) Run the program using: './demo_superglue'
 
-   a) Preloaded images: `./demo`</br>
-   
-   b) Preloaded videos: `./demo --video`</br>
-   
-   c) Open camera and capture images: `./demo --open-camera-image`</br>
-   
-   d) Open camera and capture videos: `./demo --open-camera-video`</br>
+3) The flags used:
+	a) --input -> location of the directory used for the input images
+	b) --input/video_file_name -> location of the video used for running the model
+	c) --output_dir -> directory where you want to store images of the files
+	d) --use_sift -> evaluating the model on sift descriptor
+	e) --use_sift --video -> evaluating the model on sift descriptor for videos and brute-force matching
+	e) --use_sift --flann -> evaluating the model on sift descriptor with Flann-based matching
+
+4) To measure the evaluation metrics on scanner dataset run ./match_pairs --eval
+
+
 
 ## License
 As per the original paper license:</br>
