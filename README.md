@@ -11,6 +11,9 @@ SuperGlue represents a significant advancement in the field of computer vision, 
 ## Project Description
 The goal of this project is to recreate the SuperGlue architecture from the ground up. This includes developing the attentional graph neural network, implementing the keypoint encoder, and utilizing the Sinkhorn algorithm for optimal matching. The project is structured to reflect the original paper's methodology while also incorporating my interpretations and learnings.
 
+![Brute-Force Matching with SIFT](dump_demo_sequence/matched_0.png "Matched Image 0")
+![SuperGlue Matching with SuperPoint](dump_demo_sequence/matches_000000_000001.png "Matches between Image 000001")
+
 ### Key Features
 - Attentional Graph Neural Network implementation for understanding relationships between key points.
 - Keypoint encoder to combine visual appearance and location information.
