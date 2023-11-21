@@ -18,29 +18,43 @@ The goal of this project is to recreate the SuperGlue architecture from the grou
 - SLAM for SuperGlue algorithm
 - SIFT descriptors with both brute-force matching and FLANN-based matching
 
-## Credits and Acknowledgments
-This reimplementation is inspired by and based on the research presented in the paper:
-
-> Sarlin, P.-E., DeTone, D., Malisiewicz, T., & Rabinovich, A. (2020). SuperGlue: Learning Feature Matching with Graph Neural Networks. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR).
-
-I extend my gratitude to the authors for their groundbreaking work in this field. This project is purely educational and not intended for commercial use.
+### Implementation Notes
+- The project utilizes the original authors' code to conduct experiments with SuperGlue, paired with Superpoint for feature matching.
+- I developed the sift.py file, which includes my implementation for feature extraction and matching. This implementation encompasses both Brute-force and FLANN-based matching techniques, serving as a basis for comparison against the 	SuperGlue and SuperPoint combination.
+- I am also responsible for creating the slam.py file. This file contains my code for SLAM (Simultaneous Localization and Mapping) visualization, specifically tailored for SuperGlue used alongside SuperPoint.
+- The demo_superglue.py file, which is central to running the project, includes modifications and additions made by me. These enhancements are particularly focused on supporting SIFT experiments and the integration of the SLAM implementation.
+- Additionally, the matching.py file includes some modifications made by me, primarily related to the integration and optimization of SIFT-based feature matching.
+- The datasets used for this project includes: ScanNet (Richly-annotated 3D Reconstructions of Indoor Scenes), DrivingStereo (Dataset for autonomous driving images), Pexel (Stock driving videos)
 
 ## Installation and Usage
 1) Install all the necessary packages mentioned in requirement.txt
 
 2) Run the program using: './demo_superglue'
 
-3) The flags used:
-	a) --input -> location of the directory used for the input images
-	b) --input/video_file_name -> location of the video used for running the model
-	c) --output_dir -> directory where you want to store images of the files
-	d) --use_sift -> evaluating the model on sift descriptor
-	e) --use_sift --video -> evaluating the model on sift descriptor for videos and brute-force matching
-	e) --use_sift --flann -> evaluating the model on sift descriptor with Flann-based matching
+The program supports several flags for customizing its operation:
 
-4) To measure the evaluation metrics on scanner dataset run ./match_pairs --eval
+- `--input <path>`: Specify the path to the input images directory.
+- `--input/<path>example.mp4`: Set the path to the video file for model execution.
+- `--output_dir <path>`: Define the directory to store output files.
+- `--use_sift`: Enable the use of the SIFT descriptor for model evaluation.
+- `--no_display`: Disable the OpenCV window to bypass the feature matching algorithm's visual control.
+- `--use_sift --video`: Evaluate the model on videos using SIFT descriptors and brute-force matching.
+- `--use_sift --flann`: Utilize the SIFT descriptor with FLANN-based matching.
 
+## Evaluation on ScanNet Dataset
 
+To conduct an evaluation of the model on the scanNet dataset, use the following command:
+
+```bash
+./match_pairs --eval
+```
+
+## Credits and Acknowledgments
+This reimplementation is inspired by and based on the research presented in the paper:
+
+> Sarlin, P.-E., DeTone, D., Malisiewicz, T., & Rabinovich, A. (2020). SuperGlue: Learning Feature Matching with Graph Neural Networks. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR).
+
+I extend my gratitude to the authors for their groundbreaking work in this field. This project is purely educational and not intended for commercial use.
 
 ## License
 As per the original paper license:</br>
