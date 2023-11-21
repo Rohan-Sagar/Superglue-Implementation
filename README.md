@@ -27,12 +27,13 @@ The goal of this project is to recreate the SuperGlue architecture from the grou
 - I am also responsible for creating the slam.py file. This file contains my code for SLAM (Simultaneous Localization and Mapping) visualization, specifically tailored for SuperGlue used alongside SuperPoint.
 - The demo_superglue.py file, which is central to running the project, includes modifications and additions made by me. These enhancements are particularly focused on supporting SIFT experiments and the integration of the SLAM implementation.
 - Additionally, the matching.py file includes some modifications made by me, primarily related to the integration and optimization of SIFT-based feature matching.
+- Rohan-branch includes an attempt to implement SuperGlue matching using SIFT descriptors (Implemented Attentional GNN and used original authors code for optimal matching layer)
 - The datasets used for this project includes: ScanNet (Richly-annotated 3D Reconstructions of Indoor Scenes), DrivingStereo (Dataset for autonomous driving images), Pexel (Stock driving videos)
 
 ## Installation and Usage
 1) Install all the necessary packages mentioned in requirement.txt
 
-2) Run the program using: './demo_superglue'
+2) Run the program using: './demo_superglue' -> initiates the SuperGlue matching algorithm using your camera.
 
 The program supports several flags for customizing its operation:
 
